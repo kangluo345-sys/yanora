@@ -465,7 +465,7 @@ function App() {
                   initialPosition={50}
                 />
               </div>
-              <div className="aspect-[3/3.5] rounded-2xl overflow-hidden" >
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden" >
                 <ImageCompareSlider
                   beforeImage="/5ef6dae25777256ca4e3fafedffbbea9.jpg"
                   afterImage="/c324214cb2a62d16d00510d9652c0f60.jpg"
