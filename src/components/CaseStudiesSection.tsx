@@ -3,10 +3,8 @@ import { supabase } from '../lib/supabase';
 
 interface CaseStudy {
   id: string;
-  title: string;
   before_image_url: string;
   after_image_url: string;
-  category: string;
 }
 
 function CaseStudiesSection() {
@@ -21,9 +19,9 @@ function CaseStudiesSection() {
     try {
       const { data, error } = await supabase
         .from('case_studies')
-        .select('id, title, before_image_url, after_image_url, category')
-        .eq('is_active', true)
+        .select('id, before_image_url, after_image_url')
         .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false })
         .limit(8);
 
       if (error) throw error;

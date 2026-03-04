@@ -4,28 +4,16 @@ import { Upload, Trash2, CreditCard as Edit, Save, X, Image as ImageIcon } from 
 
 interface CaseStudy {
   id: string;
-  title: string;
-  description: string;
   before_image_url: string;
   after_image_url: string;
-  category: string;
   display_order: number;
-  is_active: boolean;
-  duration: string;
-  features: string[];
   created_at: string;
 }
 
 interface FormData {
   before_image_url: string;
   after_image_url: string;
-  title: string;
-  description: string;
-  category: string;
   display_order: number;
-  is_active: boolean;
-  duration: string;
-  features: string;
 }
 
 interface UploadStatus {
@@ -41,13 +29,7 @@ function CaseStudyManagement() {
   const [formData, setFormData] = useState<FormData>({
     before_image_url: '',
     after_image_url: '',
-    title: '',
-    description: '',
-    category: '面部轮廓',
-    display_order: 0,
-    is_active: true,
-    duration: '',
-    features: ''
+    display_order: 0
   });
   const [uploading, setUploading] = useState<UploadStatus>({ before: false, after: false });
   const [beforePreview, setBeforePreview] = useState<string>('');
@@ -176,20 +158,18 @@ function CaseStudyManagement() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const featuresArray = formData.features
-        ? formData.features.split('\n').filter(f => f.trim())
-        : [];
+    if (!formData.before_image_url || !formData.after_image_url) {
+      alert('请上传前后对比图片');
+      return;
+    }
 
-      const dataToSave = {
-        ...formData,
-        features: featuresArray
-      };
+    try {
+      const dataToSave = formData;
 
       if (editingId) {
         const { error } = await supabase
           .from('case_studies')
-          .update({ ...dataToSave, updated_at: new Date().toISOString() })
+          .update(dataToSave)
           .eq('id', editingId);
 
         if (error) throw error;
@@ -213,13 +193,7 @@ function CaseStudyManagement() {
     setFormData({
       before_image_url: caseStudy.before_image_url,
       after_image_url: caseStudy.after_image_url,
-      title: caseStudy.title,
-      description: caseStudy.description || '',
-      category: caseStudy.category,
-      display_order: caseStudy.display_order,
-      is_active: caseStudy.is_active,
-      duration: caseStudy.duration || '',
-      features: (caseStudy.features || []).join('\n')
+      display_order: caseStudy.display_order
     });
     setBeforePreview('');
     setAfterPreview('');
@@ -244,31 +218,11 @@ function CaseStudyManagement() {
     }
   };
 
-  const toggleActive = async (id: string, currentStatus: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('case_studies')
-        .update({ is_active: !currentStatus, updated_at: new Date().toISOString() })
-        .eq('id', id);
-
-      if (error) throw error;
-      fetchCases();
-    } catch (error) {
-      console.error('Error toggling status:', error);
-    }
-  };
-
   const resetForm = () => {
     setFormData({
       before_image_url: '',
       after_image_url: '',
-      title: '',
-      description: '',
-      category: '面部轮廓',
-      display_order: 0,
-      is_active: true,
-      duration: '',
-      features: ''
+      display_order: 0
     });
     setEditingId(null);
     setShowForm(false);
@@ -298,12 +252,17 @@ function CaseStudyManagement() {
 
       {showForm && (
         <div className="mb-8 bg-white border-2 p-8" style={{borderColor: '#B9CBDC'}}>
-          <h3 className="text-xl font-light mb-6 tracking-wide" style={{color: '#1F1F1F'}}>
-            {editingId ? '编辑案例' : '添加新案例'}
-          </h3>
+          <div className="mb-6">
+            <h3 className="text-xl font-light tracking-wide" style={{color: '#1F1F1F'}}>
+              {editingId ? '编辑简单案例' : '添加简单案例'}
+            </h3>
+            <p className="text-sm mt-2" style={{color: '#6B7280'}}>
+              只需上传前后对比图片，案例将自动显示在首页"他们通过YANORA找回自信"区域
+            </p>
+          </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-gray-50 p-6 border" style={{borderColor: '#E5E7EB'}}>
-              <h4 className="text-sm font-normal mb-4" style={{color: '#1F1F1F'}}>上传对比照片</h4>
+              <h4 className="text-sm font-normal mb-4" style={{color: '#1F1F1F'}}>上传前后对比照片 *</h4>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
@@ -391,108 +350,18 @@ function CaseStudyManagement() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                  案例标题（选填）
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                  style={{borderColor: '#D1D5DB'}}
-                  placeholder="例如：面部轮廓提升案例"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>类别</label>
-                <select
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                  style={{borderColor: '#D1D5DB'}}
-                >
-                  <option value="面部轮廓">面部轮廓</option>
-                  <option value="身体塑形">身体塑形</option>
-                  <option value="注射提升">注射提升</option>
-                  <option value="植发">植发</option>
-                  <option value="牙齿美容">牙齿美容</option>
-                </select>
-              </div>
-            </div>
-
             <div>
-              <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                案例描述（选填）
-              </label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition resize-none"
+              <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>显示顺序</label>
+              <input
+                type="number"
+                value={formData.display_order}
+                onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
+                className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
                 style={{borderColor: '#D1D5DB'}}
-                placeholder="简要描述案例情况..."
-                rows={3}
+                min="0"
+                placeholder="0"
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                  恢复时间（选填）
-                </label>
-                <input
-                  type="text"
-                  value={formData.duration}
-                  onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                  style={{borderColor: '#D1D5DB'}}
-                  placeholder="例如：7-10天"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                  主要改善（选填）
-                </label>
-                <textarea
-                  value={formData.features}
-                  onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition resize-none"
-                  style={{borderColor: '#D1D5DB'}}
-                  placeholder="每行一个改善点，例如：&#10;面部轮廓更立体&#10;鼻梁更挺拔"
-                  rows={3}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>显示顺序</label>
-                <input
-                  type="number"
-                  value={formData.display_order}
-                  onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                  style={{borderColor: '#D1D5DB'}}
-                  min="0"
-                  placeholder="0"
-                />
-                <p className="text-xs mt-1" style={{color: '#9CA3AF'}}>数字越小越靠前显示</p>
-              </div>
-
-              <div className="flex items-center pt-7">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={formData.is_active}
-                    onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-sm font-normal" style={{color: '#4B5563'}}>在前台展示此案例</span>
-                </label>
-              </div>
+              <p className="text-xs mt-1" style={{color: '#9CA3AF'}}>数字越小越靠前显示</p>
             </div>
 
             <div className="flex gap-3 pt-4">
@@ -523,56 +392,47 @@ function CaseStudyManagement() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cases.map((caseStudy) => (
           <div key={caseStudy.id} className="bg-white border" style={{borderColor: '#E5E7EB'}}>
-            <div className="grid grid-cols-2 gap-0">
-              <div className="aspect-square overflow-hidden">
+            <div className="grid grid-cols-2 gap-0.5 bg-gray-200">
+              <div className="aspect-square overflow-hidden relative">
                 <img
                   src={caseStudy.before_image_url}
-                  alt={`${caseStudy.title} - 术前`}
+                  alt="术前"
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs py-1 px-2 text-center">
+                  术前
+                </div>
               </div>
-              <div className="aspect-square overflow-hidden">
+              <div className="aspect-square overflow-hidden relative">
                 <img
                   src={caseStudy.after_image_url}
-                  alt={`${caseStudy.title} - 术后`}
+                  alt="术后"
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs py-1 px-2 text-center">
+                  术后
+                </div>
               </div>
             </div>
 
             <div className="p-4">
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <h3 className="text-sm font-normal mb-1" style={{color: '#1F1F1F'}}>
-                    {caseStudy.title}
-                  </h3>
-                  <p className="text-xs" style={{color: '#6B7280'}}>{caseStudy.category}</p>
-                </div>
-                <span
-                  className={`text-xs px-2 py-1 ${
-                    caseStudy.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}
-                >
-                  {caseStudy.is_active ? '已启用' : '已禁用'}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs" style={{color: '#6B7280'}}>
+                  排序: {caseStudy.display_order}
+                </span>
+                <span className="text-xs" style={{color: '#9CA3AF'}}>
+                  {new Date(caseStudy.created_at).toLocaleDateString('zh-CN')}
                 </span>
               </div>
-
 
               <div className="flex gap-2">
                 <button
                   onClick={() => handleEdit(caseStudy)}
-                  className="flex items-center gap-1 px-3 py-1 text-xs border transition hover:bg-gray-50"
+                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs border transition hover:bg-gray-50"
                   style={{borderColor: '#D1D5DB', color: '#6B7280'}}
                 >
                   <Edit className="w-3 h-3" />
                   编辑
-                </button>
-                <button
-                  onClick={() => toggleActive(caseStudy.id, caseStudy.is_active)}
-                  className="flex items-center gap-1 px-3 py-1 text-xs border transition hover:bg-gray-50"
-                  style={{borderColor: '#D1D5DB', color: '#6B7280'}}
-                >
-                  {caseStudy.is_active ? '禁用' : '启用'}
                 </button>
                 <button
                   onClick={() => handleDelete(caseStudy.id)}

@@ -257,15 +257,22 @@ export default function DetailedCaseManagement() {
 
   return (
     <div className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">完整案例管理</h2>
-        <button
-          onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-        >
-          <Plus size={20} />
-          新增案例
-        </button>
+      <div className="mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">完整案例管理</h2>
+            <p className="text-sm text-gray-600 mt-2">
+              案例将优先显示在"案例"页面，可选择性地显示在各服务页面的案例区域
+            </p>
+          </div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            <Plus size={20} />
+            新增案例
+          </button>
+        </div>
       </div>
 
       {showForm && (
