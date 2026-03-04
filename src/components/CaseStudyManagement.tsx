@@ -11,6 +11,8 @@ interface CaseStudy {
   category: string;
   display_order: number;
   is_active: boolean;
+  duration: string;
+  features: string[];
   created_at: string;
 }
 
@@ -18,9 +20,12 @@ interface FormData {
   before_image_url: string;
   after_image_url: string;
   title: string;
+  description: string;
   category: string;
   display_order: number;
   is_active: boolean;
+  duration: string;
+  features: string;
 }
 
 interface UploadStatus {
@@ -37,9 +42,12 @@ function CaseStudyManagement() {
     before_image_url: '',
     after_image_url: '',
     title: '',
+    description: '',
     category: '面部轮廓',
     display_order: 0,
-    is_active: true
+    is_active: true,
+    duration: '',
+    features: ''
   });
   const [uploading, setUploading] = useState<UploadStatus>({ before: false, after: false });
   const [beforePreview, setBeforePreview] = useState<string>('');
@@ -134,17 +142,26 @@ function CaseStudyManagement() {
     e.preventDefault();
 
     try {
+      const featuresArray = formData.features
+        ? formData.features.split('\n').filter(f => f.trim())
+        : [];
+
+      const dataToSave = {
+        ...formData,
+        features: featuresArray
+      };
+
       if (editingId) {
         const { error } = await supabase
           .from('case_studies')
-          .update({ ...formData, updated_at: new Date().toISOString() })
+          .update({ ...dataToSave, updated_at: new Date().toISOString() })
           .eq('id', editingId);
 
         if (error) throw error;
       } else {
         const { error } = await supabase
           .from('case_studies')
-          .insert([formData]);
+          .insert([dataToSave]);
 
         if (error) throw error;
       }
@@ -162,9 +179,12 @@ function CaseStudyManagement() {
       before_image_url: caseStudy.before_image_url,
       after_image_url: caseStudy.after_image_url,
       title: caseStudy.title,
+      description: caseStudy.description || '',
       category: caseStudy.category,
       display_order: caseStudy.display_order,
-      is_active: caseStudy.is_active
+      is_active: caseStudy.is_active,
+      duration: caseStudy.duration || '',
+      features: (caseStudy.features || []).join('\n')
     });
     setBeforePreview('');
     setAfterPreview('');
@@ -208,9 +228,12 @@ function CaseStudyManagement() {
       before_image_url: '',
       after_image_url: '',
       title: '',
+      description: '',
       category: '面部轮廓',
       display_order: 0,
-      is_active: true
+      is_active: true,
+      duration: '',
+      features: ''
     });
     setEditingId(null);
     setShowForm(false);
@@ -362,6 +385,50 @@ function CaseStudyManagement() {
                   <option value="植发">植发</option>
                   <option value="牙齿美容">牙齿美容</option>
                 </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                案例描述（选填）
+              </label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition resize-none"
+                style={{borderColor: '#D1D5DB'}}
+                placeholder="简要描述案例情况..."
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                  恢复时间（选填）
+                </label>
+                <input
+                  type="text"
+                  value={formData.duration}
+                  onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
+                  style={{borderColor: '#D1D5DB'}}
+                  placeholder="例如：7-10天"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                  主要改善（选填）
+                </label>
+                <textarea
+                  value={formData.features}
+                  onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition resize-none"
+                  style={{borderColor: '#D1D5DB'}}
+                  placeholder="每行一个改善点，例如：&#10;面部轮廓更立体&#10;鼻梁更挺拔"
+                  rows={3}
+                />
               </div>
             </div>
 

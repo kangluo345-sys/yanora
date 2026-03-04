@@ -35,6 +35,8 @@ function CasesPage() {
       const { data, error } = await supabase
         .from('case_studies')
         .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -120,6 +122,8 @@ function CasesPage() {
                 >
                   <div className="aspect-[4/3]">
                     <ImageCompareSlider
+                      beforeImage={caseStudy.before_image_url}
+                      afterImage={caseStudy.after_image_url}
                       beforeLabel="术前"
                       afterLabel="术后"
                       initialPosition={50}
