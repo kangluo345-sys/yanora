@@ -495,7 +495,7 @@ function App() {
       <section className="md:hidden py-8">
         <div className="w-full px-1">
           <div className="p-1 flex flex-col gap-3 rounded-2xl border-2" style={{borderColor: '#B9CBDC'}}>
-            <div className="flex flex-col -space-y-8">
+            <div className="grid grid-cols-2 gap-3">
               <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <ImageCompareSlider
                   beforeImage="/68744e766a6b63d88f86d714366bcd31.jpg"
