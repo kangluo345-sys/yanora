@@ -64,10 +64,10 @@ export default function ServiceCasesSection({ serviceType, title, title_en }: Se
 
   if (loading) {
     return (
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-gray-500">{language === 'zh' ? '加载中...' : 'Loading...'}</p>
+      <section className="py-20 md:py-28 px-6 md:px-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-12">
+            <p className="text-base" style={{color: '#6B7280'}}>{language === 'zh' ? '加载中...' : 'Loading...'}</p>
           </div>
         </div>
       </section>
@@ -79,33 +79,48 @@ export default function ServiceCasesSection({ serviceType, title, title_en }: Se
   }
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-light mb-4 text-gray-900">
+    <section className="py-20 md:py-28 px-6 md:px-12 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-16 text-center">
+          <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
             {displayTitle}
           </h2>
-          <div className="w-24 h-1 bg-amber-600 mx-auto"></div>
+          <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
+            {language === 'zh' ? '见证专业技术带来的美丽蜕变' : 'Witness the beautiful transformation brought by professional technology'}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {cases.map((caseItem) => (
-            <div key={caseItem.id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="aspect-[4/3] relative">
-                <ImageCompareSlider
-                  beforeImage={caseItem.before_image_url}
-                  afterImage={caseItem.after_image_url}
-                  beforeLabel={language === 'zh' ? '术前' : 'Before'}
-                  afterLabel={language === 'zh' ? '术后' : 'After'}
-                />
+            <div key={caseItem.id} className="bg-white shadow-lg overflow-hidden">
+              <div className="grid grid-cols-2 gap-0">
+                <div className="relative aspect-[3/4]">
+                  <img
+                    src={caseItem.before_image_url}
+                    alt={`${language === 'zh' ? caseItem.title : caseItem.title_en} - ${language === 'zh' ? '术前' : 'Before'}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-2 text-sm md:text-base font-light">
+                    {language === 'zh' ? '术前' : 'Before'}
+                  </div>
+                </div>
+                <div className="relative aspect-[3/4]">
+                  <img
+                    src={caseItem.after_image_url}
+                    alt={`${language === 'zh' ? caseItem.title : caseItem.title_en} - ${language === 'zh' ? '术后' : 'After'}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-2 text-sm md:text-base font-light">
+                    {language === 'zh' ? '术后' : 'After'}
+                  </div>
+                </div>
               </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">
+              <div className="p-4 md:p-6 lg:p-8">
+                <h3 className="text-base md:text-lg lg:text-xl font-light mb-2 md:mb-3" style={{color: '#1F1F1F'}}>
                   {language === 'zh' ? caseItem.title : caseItem.title_en}
                 </h3>
                 {(caseItem.description || caseItem.description_en) && (
-                  <p className="text-gray-600 text-sm line-clamp-3">
+                  <p className="text-xs md:text-sm lg:text-base leading-relaxed" style={{color: '#6B7280'}}>
                     {language === 'zh' ? caseItem.description : caseItem.description_en}
                   </p>
                 )}
