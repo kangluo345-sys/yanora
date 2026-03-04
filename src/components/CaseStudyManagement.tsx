@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Upload, Trash2, CreditCard as Edit, Save, X } from 'lucide-react';
+import { Upload, Trash2, CreditCard as Edit, Save, X, Image as ImageIcon } from 'lucide-react';
 
 interface CaseStudy {
   id: string;
@@ -23,6 +23,11 @@ interface FormData {
   is_active: boolean;
 }
 
+interface UploadStatus {
+  before: boolean;
+  after: boolean;
+}
+
 function CaseStudyManagement() {
   const [cases, setCases] = useState<CaseStudy[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,10 +41,77 @@ function CaseStudyManagement() {
     display_order: 0,
     is_active: true
   });
+  const [uploading, setUploading] = useState<UploadStatus>({ before: false, after: false });
+  const [beforePreview, setBeforePreview] = useState<string>('');
+  const [afterPreview, setAfterPreview] = useState<string>('');
 
   useEffect(() => {
     fetchCases();
   }, []);
+
+  const uploadImage = async (file: File, type: 'before' | 'after'): Promise<string | null> => {
+    try {
+      setUploading(prev => ({ ...prev, [type]: true }));
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('case-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from('case-images')
+        .getPublicUrl(filePath);
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('图片上传失败，请重试');
+      return null;
+    } finally {
+      setUploading(prev => ({ ...prev, [type]: false }));
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'before' | 'after') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('图片大小不能超过 5MB');
+      return;
+    }
+
+    if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
+      alert('只支持 JPG、PNG 和 WebP 格式的图片');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (type === 'before') {
+        setBeforePreview(reader.result as string);
+      } else {
+        setAfterPreview(reader.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+
+    const url = await uploadImage(file, type);
+    if (url) {
+      setFormData(prev => ({
+        ...prev,
+        [`${type}_image_url`]: url
+      }));
+    }
+  };
 
   const fetchCases = async () => {
     setLoading(true);
@@ -94,6 +166,8 @@ function CaseStudyManagement() {
       display_order: caseStudy.display_order,
       is_active: caseStudy.is_active
     });
+    setBeforePreview('');
+    setAfterPreview('');
     setEditingId(caseStudy.id);
     setShowForm(true);
   };
@@ -140,6 +214,8 @@ function CaseStudyManagement() {
     });
     setEditingId(null);
     setShowForm(false);
+    setBeforePreview('');
+    setAfterPreview('');
   };
 
   if (loading) {
@@ -173,52 +249,86 @@ function CaseStudyManagement() {
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                    术前照片 URL <span className="text-red-500">*</span>
+                    术前照片 <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="url"
-                    value={formData.before_image_url}
-                    onChange={(e) => setFormData({ ...formData, before_image_url: e.target.value })}
-                    className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                    style={{borderColor: '#D1D5DB'}}
-                    placeholder="https://example.com/before.jpg"
-                    required
-                  />
-                  {formData.before_image_url && (
-                    <div className="mt-3">
-                      <img
-                        src={formData.before_image_url}
-                        alt="术前预览"
-                        className="w-full h-48 object-cover border"
-                        style={{borderColor: '#D1D5DB'}}
-                      />
-                    </div>
-                  )}
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={(e) => handleFileChange(e, 'before')}
+                      className="hidden"
+                      id="before-image"
+                      disabled={uploading.before}
+                    />
+                    <label
+                      htmlFor="before-image"
+                      className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed cursor-pointer transition ${
+                        uploading.before ? 'bg-gray-100 cursor-not-allowed' : 'hover:bg-gray-100'
+                      }`}
+                      style={{borderColor: '#D1D5DB'}}
+                    >
+                      {uploading.before ? (
+                        <div className="text-center">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-2"></div>
+                          <p className="text-xs" style={{color: '#6B7280'}}>上传中...</p>
+                        </div>
+                      ) : beforePreview || formData.before_image_url ? (
+                        <img
+                          src={beforePreview || formData.before_image_url}
+                          alt="术前预览"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="text-center">
+                          <ImageIcon className="w-12 h-12 mx-auto mb-2" style={{color: '#9CA3AF'}} />
+                          <p className="text-sm" style={{color: '#6B7280'}}>点击上传术前照片</p>
+                          <p className="text-xs mt-1" style={{color: '#9CA3AF'}}>支持 JPG、PNG、WebP，最大 5MB</p>
+                        </div>
+                      )}
+                    </label>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
-                    术后照片 URL <span className="text-red-500">*</span>
+                    术后照片 <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="url"
-                    value={formData.after_image_url}
-                    onChange={(e) => setFormData({ ...formData, after_image_url: e.target.value })}
-                    className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
-                    style={{borderColor: '#D1D5DB'}}
-                    placeholder="https://example.com/after.jpg"
-                    required
-                  />
-                  {formData.after_image_url && (
-                    <div className="mt-3">
-                      <img
-                        src={formData.after_image_url}
-                        alt="术后预览"
-                        className="w-full h-48 object-cover border"
-                        style={{borderColor: '#D1D5DB'}}
-                      />
-                    </div>
-                  )}
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={(e) => handleFileChange(e, 'after')}
+                      className="hidden"
+                      id="after-image"
+                      disabled={uploading.after}
+                    />
+                    <label
+                      htmlFor="after-image"
+                      className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed cursor-pointer transition ${
+                        uploading.after ? 'bg-gray-100 cursor-not-allowed' : 'hover:bg-gray-100'
+                      }`}
+                      style={{borderColor: '#D1D5DB'}}
+                    >
+                      {uploading.after ? (
+                        <div className="text-center">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-2"></div>
+                          <p className="text-xs" style={{color: '#6B7280'}}>上传中...</p>
+                        </div>
+                      ) : afterPreview || formData.after_image_url ? (
+                        <img
+                          src={afterPreview || formData.after_image_url}
+                          alt="术后预览"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="text-center">
+                          <ImageIcon className="w-12 h-12 mx-auto mb-2" style={{color: '#9CA3AF'}} />
+                          <p className="text-sm" style={{color: '#6B7280'}}>点击上传术后照片</p>
+                          <p className="text-xs mt-1" style={{color: '#9CA3AF'}}>支持 JPG、PNG、WebP，最大 5MB</p>
+                        </div>
+                      )}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
