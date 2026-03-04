@@ -69,11 +69,10 @@ function BookingPage() {
       if (insertError) throw insertError;
 
       if (data) {
-        setBookingId(data.id);
+        navigate(`/payment?booking_id=${data.id}`);
       } else {
         throw new Error('预订创建成功，但无法获取预订ID');
       }
-      setStep('payment');
     } catch (err: any) {
       setError(err.message || '提交失败，请重试');
     } finally {

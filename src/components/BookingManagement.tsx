@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Check, X, Clock, DollarSign } from 'lucide-react';
 
+interface Service {
+  name: string;
+  price: number;
+}
+
 interface Booking {
   id: string;
   name: string;
@@ -12,7 +17,11 @@ interface Booking {
   message: string;
   status: string;
   payment_status: string;
+  payment_method: string;
   consultation_fee: number;
+  total_amount: number;
+  selected_services: Service[];
+  payment_completed_at: string;
   created_at: string;
 }
 
@@ -124,7 +133,8 @@ function BookingManagement() {
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>客户信息</th>
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>预约日期</th>
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>服务类型</th>
-              <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>面诊金</th>
+              <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>总金额</th>
+              <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>支付方式</th>
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>支付状态</th>
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>预约状态</th>
               <th className="px-4 py-3 text-left text-xs font-normal" style={{color: '#6B7280'}}>操作</th>
@@ -139,13 +149,28 @@ function BookingManagement() {
                   <div className="text-xs" style={{color: '#6B7280'}}>{booking.phone}</div>
                 </td>
                 <td className="px-4 py-4 text-sm" style={{color: '#4B5563'}}>
-                  {new Date(booking.preferred_date).toLocaleDateString('zh-CN')}
+                  {booking.preferred_date ? new Date(booking.preferred_date).toLocaleDateString('zh-CN') : '待确认'}
+                </td>
+                <td className="px-4 py-4">
+                  <div className="text-sm" style={{color: '#4B5563'}}>{booking.service_type}</div>
+                  {booking.selected_services && booking.selected_services.length > 0 && (
+                    <div className="text-xs mt-1" style={{color: '#9CA3AF'}}>
+                      +{booking.selected_services.length}个额外服务
+                    </div>
+                  )}
+                </td>
+                <td className="px-4 py-4">
+                  <div className="text-sm font-medium" style={{color: '#4B5563'}}>
+                    ¥{booking.total_amount || booking.consultation_fee}
+                  </div>
+                  {booking.selected_services && booking.selected_services.length > 0 && (
+                    <div className="text-xs" style={{color: '#9CA3AF'}}>
+                      咨询费: ¥{booking.consultation_fee}
+                    </div>
+                  )}
                 </td>
                 <td className="px-4 py-4 text-sm" style={{color: '#4B5563'}}>
-                  {booking.service_type}
-                </td>
-                <td className="px-4 py-4 text-sm" style={{color: '#4B5563'}}>
-                  ¥{booking.consultation_fee}
+                  {booking.payment_method || '-'}
                 </td>
                 <td className="px-4 py-4">
                   <span
@@ -157,6 +182,11 @@ function BookingManagement() {
                   >
                     {booking.payment_status === 'paid' ? '已支付' : '未支付'}
                   </span>
+                  {booking.payment_completed_at && (
+                    <div className="text-xs mt-1" style={{color: '#9CA3AF'}}>
+                      {new Date(booking.payment_completed_at).toLocaleDateString('zh-CN')}
+                    </div>
+                  )}
                 </td>
                 <td className="px-4 py-4">
                   <span

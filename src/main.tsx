@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext.tsx';
 import App from './App.tsx';
 import BookingPage from './components/BookingPage.tsx';
+import PaymentPage from './components/PaymentPage.tsx';
+import BookingSuccessPage from './components/BookingSuccessPage.tsx';
 import LoginPage from './components/LoginPage.tsx';
 import RegisterPage from './components/RegisterPage.tsx';
 import AdminLoginPage from './components/AdminLoginPage.tsx';
@@ -24,6 +26,8 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/booking" element={<BookingPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/booking/success" element={<BookingSuccessPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin-login" element={<AdminLoginPage />} />
