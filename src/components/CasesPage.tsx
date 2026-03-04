@@ -29,10 +29,10 @@ function CasesPage() {
   const categories = [
     { value: 'all', label_zh: '全部', label_en: 'All' },
     { value: 'facial', label_zh: '面部轮廓', label_en: 'Facial Contour' },
-    { value: 'dental', label_zh: '齿科', label_en: 'Dental' },
-    { value: 'injection', label_zh: '注射提升', label_en: 'Injection Lifting' },
+    { value: 'dental', label_zh: '牙齿美容', label_en: 'Dental' },
+    { value: 'injection', label_zh: '面部年轻化', label_en: 'Injection Lifting' },
     { value: 'body', label_zh: '身体塑形', label_en: 'Body Sculpting' },
-    { value: 'hair', label_zh: '毛发移植', label_en: 'Hair Transplant' },
+    { value: 'hair', label_zh: '植发', label_en: 'Hair Transplant' },
   ];
 
   useEffect(() => {
