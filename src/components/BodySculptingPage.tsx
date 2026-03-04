@@ -384,7 +384,9 @@ function BodySculptingPage() {
             <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
               真实案例
             </h2>
-            <div className="w-24 h-1 mx-auto mb-4" style={{backgroundColor: '#F59E0B'}}></div>
+            <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
+              见证专业技术带来的美丽蜕变
+            </p>
           </div>
 
           {loading ? (
