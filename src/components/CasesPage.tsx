@@ -128,10 +128,9 @@ function CasesPage() {
               {filteredCases.map((caseItem) => (
                 <div
                   key={caseItem.id}
-                  className="bg-white shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl"
-                  style={{border: '1px solid #E5E7EB'}}
+                  className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                 >
-                  <div className="aspect-[4/3]">
+                  <div className="aspect-[4/3] relative">
                     <ImageCompareSlider
                       beforeImage={caseItem.before_image_url}
                       afterImage={caseItem.after_image_url}
@@ -142,13 +141,14 @@ function CasesPage() {
                   </div>
 
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-3" style={{color: '#1F1F1F'}}>
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900">
                       {language === 'zh' ? caseItem.title : caseItem.title_en}
                     </h3>
-
-                    <p className="text-sm leading-relaxed" style={{color: '#6B7280'}}>
-                      {language === 'zh' ? caseItem.description : caseItem.description_en}
-                    </p>
+                    {((language === 'zh' ? caseItem.description : caseItem.description_en)) && (
+                      <p className="text-gray-600 text-sm line-clamp-3">
+                        {language === 'zh' ? caseItem.description : caseItem.description_en}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
