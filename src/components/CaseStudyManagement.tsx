@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Upload, Trash2, Edit, Save, X } from 'lucide-react';
+import { Upload, Trash2, CreditCard as Edit, Save, X } from 'lucide-react';
 
 interface CaseStudy {
   id: string;
