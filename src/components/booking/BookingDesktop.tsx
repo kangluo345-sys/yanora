@@ -236,7 +236,7 @@ function BookingDesktop({
             onClick={() => navigate('/')}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <span className="text-xl font-light tracking-widest" style={{color: '#1F1F1F'}}>AESTHETIC</span>
+            <span className="text-xl font-light tracking-widest" style={{color: '#1F1F1F'}}>YANORA</span>
           </button>
         </div>
       </nav>

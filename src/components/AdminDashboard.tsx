@@ -72,7 +72,7 @@ function AdminDashboard() {
         <div className="px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl font-light tracking-widest" style={{color: '#1F1F1F'}}>
-              AESTHETIC 管理后台
+              YANORA 管理后台
             </span>
           </div>
 

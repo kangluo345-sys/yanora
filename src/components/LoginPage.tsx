@@ -42,7 +42,7 @@ function LoginPage() {
         <div className="w-full max-w-md">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-light tracking-widest mb-3" style={{color: '#1F1F1F'}}>
-            AESTHETIC
+            YANORA
           </h1>
           <p className="text-sm tracking-wide" style={{color: '#6B7280'}}>
             登录您的账户
