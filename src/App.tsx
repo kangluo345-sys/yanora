@@ -456,7 +456,7 @@ function App() {
         <div className="w-4/5 mx-auto">
           <div className="p-8 flex flex-row gap-8 rounded-3xl border-4" style={{minHeight: '320px', borderColor: '#B9CBDC'}}>
             <div className="w-5/6 grid grid-cols-2 gap-6">
-              <div className="aspect-[3/3.5] rounded-2xl overflow-hidden" >
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden" >
                 <ImageCompareSlider
                   beforeImage="/68744e766a6b63d88f86d714366bcd31.jpg"
                   afterImage="/24a1e5e820d6d721e7aa3970ae648b43.jpg"
@@ -465,7 +465,7 @@ function App() {
                   initialPosition={50}
                 />
               </div>
-              <div className="aspect-[3/3.5] rounded-2xl overflow-hidden" >
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden" >
                 <ImageCompareSlider
                   beforeImage="/5ef6dae25777256ca4e3fafedffbbea9.jpg"
                   afterImage="/c324214cb2a62d16d00510d9652c0f60.jpg"
