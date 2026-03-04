@@ -453,9 +453,9 @@ function App() {
 
       {/* 桌面端服务展示 */}
       <section className="hidden md:block py-12 px-12">
-        <div className="w-4/5mx-auto">
+        <div className="w-4/5 mx-auto">
           <div className="p-4 flex flex-row gap-8 rounded-3xl border-4" style={{minHeight: '450px', borderColor: '#B9CBDC'}}>
-            <div className="w-5/4 grid grid-cols-2 gap-4">
+            <div className="w-5/6 grid grid-cols-2 gap-4">
               <div className="aspect-[3/3.5] rounded-2xl overflow-hidden" >
                 <ImageCompareSlider
                   beforeImage="/68744e766a6b63d88f86d714366bcd31.jpg"
