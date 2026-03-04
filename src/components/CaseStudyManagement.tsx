@@ -65,23 +65,36 @@ function CaseStudyManagement() {
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('case-images')
         .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error details:', uploadError);
+        throw new Error(uploadError.message || '上传失败');
+      }
+
+      if (!uploadData) {
+        throw new Error('上传成功但未返回数据');
+      }
 
       const { data } = supabase.storage
         .from('case-images')
         .getPublicUrl(filePath);
 
+      if (!data.publicUrl) {
+        throw new Error('无法获取图片公开链接');
+      }
+
+      console.log('Upload successful:', data.publicUrl);
       return data.publicUrl;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error uploading image:', error);
-      alert('图片上传失败，请重试');
+      const errorMessage = error?.message || '图片上传失败';
+      alert(`图片上传失败: ${errorMessage}\n请确保您已登录且有管理员权限`);
       return null;
     } finally {
       setUploading(prev => ({ ...prev, [type]: false }));
