@@ -1,82 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { supabase } from '../lib/supabase';
 
 interface FAQItem {
+  id: string;
   question: string;
   answer: string;
   category: string;
+  display_order: number;
+  is_active: boolean;
 }
-
-const faqData: FAQItem[] = [
-  {
-    category: '整形手术',
-    question: '整形手术安全吗？',
-    answer: '我们的整形手术由经验丰富的专业医生执行，使用国际标准的医疗设备和技术。所有手术都在符合国际医疗标准的设施中进行，确保您的安全。'
-  },
-  {
-    category: '整形手术',
-    question: '整形手术需要多长时间恢复？',
-    answer: '恢复时间因手术类型而异。面部轮廓手术通常需要2-4周恢复，注射类治疗可能只需要几天。我们会为您提供详细的术后护理指导。'
-  },
-  {
-    category: '整形手术',
-    question: '手术会留疤吗？',
-    answer: '我们使用先进的微创技术，切口通常隐藏在自然褶皱或发际线中。随着时间推移，疤痕会逐渐淡化，几乎不可见。'
-  },
-  {
-    category: '预约咨询',
-    question: '如何预约咨询？',
-    answer: '您可以通过我们的在线预约系统、电话或微信预约咨询。初次咨询包括面部分析、手术计划讨论和费用评估。'
-  },
-  {
-    category: '预约咨询',
-    question: '咨询需要付费吗？',
-    answer: '首次咨询是免费的。我们的专家会详细了解您的需求，提供专业建议和定制化方案。'
-  },
-  {
-    category: '预约咨询',
-    question: '可以远程咨询吗？',
-    answer: '是的，我们提供在线视频咨询服务。您可以通过视频通话与我们的专家讨论您的需求和期望。'
-  },
-  {
-    category: '费用支付',
-    question: '手术费用包含哪些项目？',
-    answer: '费用包括术前检查、手术费、麻醉费、术后护理和复诊。我们会在咨询时提供详细的费用明细。'
-  },
-  {
-    category: '费用支付',
-    question: '支持分期付款吗？',
-    answer: '是的，我们提供灵活的分期付款方案，让您能够更轻松地进行投资。具体方案可在咨询时讨论。'
-  },
-  {
-    category: '费用支付',
-    question: '可以使用保险吗？',
-    answer: '美容整形手术通常不在医疗保险覆盖范围内。但如果是因医疗需要的重建手术，部分保险可能覆盖。'
-  },
-  {
-    category: '术后护理',
-    question: '术后需要多久复诊？',
-    answer: '通常在术后1周、1个月、3个月和6个月进行复诊，确保恢复情况良好。紧急情况可随时联系我们。'
-  },
-  {
-    category: '术后护理',
-    question: '术后有什么注意事项？',
-    answer: '需要避免剧烈运动、保持伤口清洁、按时服药、定期复诊。我们会提供详细的术后护理手册。'
-  },
-  {
-    category: '术后护理',
-    question: '术后效果可以维持多久？',
-    answer: '效果持续时间因手术类型和个人情况而异。手术类治疗效果通常是永久的，注射类治疗可能需要定期维护。'
-  }
-];
 
 export default function FAQPage() {
   const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
+  const [faqData, setFaqData] = useState<FAQItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFAQs();
+  }, []);
+
+  const loadFAQs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('faqs')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+      setFaqData(data || []);
+    } catch (error) {
+      console.error('Error loading FAQs:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = ['全部', ...Array.from(new Set(faqData.map(item => item.category)))];
 
@@ -87,6 +51,17 @@ export default function FAQPage() {
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-lg" style={{color: '#6B7280'}}>加载中...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">

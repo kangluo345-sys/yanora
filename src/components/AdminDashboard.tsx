@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { LogOut, Calendar, Image, Users } from 'lucide-react';
+import { LogOut, Calendar, Image, Users, HelpCircle } from 'lucide-react';
 import BookingManagement from './BookingManagement';
 import CaseStudyManagement from './CaseStudyManagement';
+import FAQManagement from './FAQManagement';
 
 interface Admin {
   id: string;
@@ -11,7 +12,7 @@ interface Admin {
   role: string;
 }
 
-type TabType = 'bookings' | 'cases' | 'customers';
+type TabType = 'bookings' | 'cases' | 'customers' | 'faqs';
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -125,6 +126,17 @@ function AdminDashboard() {
               <Users className="w-5 h-5" />
               客户管理
             </button>
+
+            <button
+              onClick={() => setActiveTab('faqs')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition ${
+                activeTab === 'faqs' ? 'bg-white shadow-sm' : ''
+              }`}
+              style={{color: activeTab === 'faqs' ? '#1F1F1F' : '#6B7280'}}
+            >
+              <HelpCircle className="w-5 h-5" />
+              FAQ 管理
+            </button>
           </nav>
         </aside>
 
@@ -136,6 +148,7 @@ function AdminDashboard() {
               <p className="text-sm" style={{color: '#6B7280'}}>客户管理功能开发中...</p>
             </div>
           )}
+          {activeTab === 'faqs' && <FAQManagement />}
         </main>
       </div>
     </div>
