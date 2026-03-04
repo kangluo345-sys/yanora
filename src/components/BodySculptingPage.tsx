@@ -1,16 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import ServiceCasesSection from './ServiceCasesSection';
+import { supabase } from '../lib/supabase';
+
+interface DetailedCase {
+  id: string;
+  title: string;
+  title_en: string;
+  description: string;
+  description_en: string;
+  before_image_url: string;
+  after_image_url: string;
+  category: string;
+  display_order: number;
+}
 
 function BodySculptingPage() {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeService, setActiveService] = useState<'waist' | 'breast' | 'liposuction' | 'abdomen' | 'buttocks' | 'thigh'>('waist');
+  const [detailedCases, setDetailedCases] = useState<DetailedCase[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const images = [
     '/Gemini_Generated_Image_94iwds94iwds94iw.png',
@@ -126,24 +141,28 @@ function BodySculptingPage() {
     }
   };
 
-  const caseStudies = [
-    {
-      id: 1,
-      title: '直角腰塑形案例',
-      category: '腰部塑形',
-      beforeImage: '/Gemini_Generated_Image_94iwds94iwds94iw.png',
-      afterImage: '/Gemini_Generated_Image_iubeodiubeodiube.png',
-      description: '通过精准吸脂技术，成功打造完美直角腰线，腰臀比例达到理想状态。'
-    },
-    {
-      id: 2,
-      title: '隆胸手术案例',
-      category: '胸部塑形',
-      beforeImage: '/Gemini_Generated_Image_u1lac1u1lac1u1la.png',
-      afterImage: '/Gemini_Generated_Image_94iwds94iwds94iw.png',
-      description: '采用假体隆胸技术，塑造自然饱满的胸型，提升整体身材比例。'
-    }
-  ];
+  // Fetch detailed cases from database
+  useEffect(() => {
+    const fetchDetailedCases = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('detailed_cases')
+          .select('*')
+          .eq('show_in_body', true)
+          .eq('is_published', true)
+          .order('display_order', { ascending: true });
+
+        if (error) throw error;
+        setDetailedCases(data || []);
+      } catch (error) {
+        console.error('Error fetching detailed cases:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDetailedCases();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -372,23 +391,28 @@ function BodySculptingPage() {
             </p>
           </div>
 
-          <div className="space-y-16">
-            {caseStudies.map((caseStudy, index) => (
-              <div key={caseStudy.id} className="bg-white border" style={{borderColor: '#E5E7EB'}}>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                  {/* Image Compare Slider */}
-                  <div className="p-6 md:p-8 min-h-[500px] md:min-h-[600px] flex items-center">
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-base" style={{color: '#6B7280'}}>加载中...</p>
+            </div>
+          ) : detailedCases.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-base" style={{color: '#6B7280'}}>暂无案例</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {detailedCases.map((caseStudy) => (
+                <div key={caseStudy.id} className="bg-white shadow-lg overflow-hidden">
+                  <div className="relative">
                     <ImageCompareSlider
-                      beforeImage={caseStudy.beforeImage}
-                      afterImage={caseStudy.afterImage}
+                      beforeImage={caseStudy.before_image_url}
+                      afterImage={caseStudy.after_image_url}
                       altBefore={`${caseStudy.title} - 术前`}
                       altAfter={`${caseStudy.title} - 术后`}
                     />
                   </div>
-
-                  {/* Case Details */}
-                  <div className="p-6 md:p-8 flex flex-col justify-center">
-                    <div className="mb-4">
+                  <div className="p-6 md:p-8">
+                    <div className="mb-3">
                       <span
                         className="inline-block px-4 py-1 text-xs font-light tracking-wider"
                         style={{backgroundColor: '#1C2B3A', color: 'white'}}
@@ -396,20 +420,17 @@ function BodySculptingPage() {
                         {caseStudy.category}
                       </span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-light mb-4" style={{color: '#1F1F1F'}}>
-                      案例 {String(index + 1).padStart(2, '0')}
-                    </h3>
-                    <h4 className="text-lg md:text-xl font-normal mb-4" style={{color: '#1F1F1F'}}>
+                    <h3 className="text-lg md:text-xl font-light mb-3" style={{color: '#1F1F1F'}}>
                       {caseStudy.title}
-                    </h4>
+                    </h3>
                     <p className="text-sm md:text-base leading-relaxed" style={{color: '#6B7280'}}>
                       {caseStudy.description}
                     </p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
