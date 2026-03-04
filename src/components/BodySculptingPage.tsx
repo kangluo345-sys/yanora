@@ -386,6 +386,7 @@ function BodySculptingPage() {
             <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
               真实案例
             </h2>
+            <div className="w-24 h-1 mx-auto mb-4" style={{backgroundColor: '#F59E0B'}}></div>
             <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
               见证专业技术带来的美丽蜕变
             </p>
@@ -400,27 +401,33 @@ function BodySculptingPage() {
               <p className="text-base" style={{color: '#6B7280'}}>暂无案例</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-4 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {detailedCases.map((caseStudy) => (
                 <div key={caseStudy.id} className="bg-white shadow-lg overflow-hidden">
-                  <div className="relative">
-                    <ImageCompareSlider
-                      beforeImage={caseStudy.before_image_url}
-                      afterImage={caseStudy.after_image_url}
-                      altBefore={`${caseStudy.title} - 术前`}
-                      altAfter={`${caseStudy.title} - 术后`}
-                    />
-                  </div>
-                  <div className="p-3 md:p-6 lg:p-8">
-                    <div className="mb-2 md:mb-3">
-                      <span
-                        className="inline-block px-2 md:px-4 py-1 text-xs font-light tracking-wider"
-                        style={{backgroundColor: '#1C2B3A', color: 'white'}}
-                      >
-                        {caseStudy.category}
-                      </span>
+                  <div className="grid grid-cols-2 gap-0">
+                    <div className="relative aspect-[3/4]">
+                      <img
+                        src={caseStudy.before_image_url}
+                        alt={`${caseStudy.title} - 术前`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-2 text-sm md:text-base font-light">
+                        术前
+                      </div>
                     </div>
-                    <h3 className="text-sm md:text-lg lg:text-xl font-light mb-2 md:mb-3" style={{color: '#1F1F1F'}}>
+                    <div className="relative aspect-[3/4]">
+                      <img
+                        src={caseStudy.after_image_url}
+                        alt={`${caseStudy.title} - 术后`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-2 text-sm md:text-base font-light">
+                        术后
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 md:p-6 lg:p-8">
+                    <h3 className="text-base md:text-lg lg:text-xl font-light mb-2 md:mb-3" style={{color: '#1F1F1F'}}>
                       {caseStudy.title}
                     </h3>
                     <p className="text-xs md:text-sm lg:text-base leading-relaxed" style={{color: '#6B7280'}}>
@@ -435,7 +442,7 @@ function BodySculptingPage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-white">
+      <section className="py-20 md:py-28 px-6 md:px-12 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-light mb-12 text-center" style={{color: '#1F1F1F'}}>
             为什么选择我们
