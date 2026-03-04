@@ -4,6 +4,7 @@ import { useState } from 'react';
 import CTASection from './CTASection';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import ServiceCasesSection from './ServiceCasesSection';
 
 function DentalPage() {
   const navigate = useNavigate();
@@ -305,6 +306,8 @@ function DentalPage() {
           </div>
         </div>
       </section>
+
+      <ServiceCasesSection serviceType="dental" />
 
       <CTASection />
 

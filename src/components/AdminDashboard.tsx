@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { LogOut, Calendar, Image, Users, HelpCircle, MessageSquare } from 'lucide-react';
+import { LogOut, Calendar, Image, Users, HelpCircle, MessageSquare, FileImage } from 'lucide-react';
 import BookingManagement from './BookingManagement';
 import CaseStudyManagement from './CaseStudyManagement';
+import DetailedCaseManagement from './DetailedCaseManagement';
 import FAQManagement from './FAQManagement';
 import TestimonialManagement from './TestimonialManagement';
 
@@ -13,7 +14,7 @@ interface Admin {
   role: string;
 }
 
-type TabType = 'bookings' | 'cases' | 'customers' | 'faqs' | 'testimonials';
+type TabType = 'bookings' | 'cases' | 'detailed-cases' | 'customers' | 'faqs' | 'testimonials';
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -114,7 +115,18 @@ function AdminDashboard() {
               style={{color: activeTab === 'cases' ? '#1F1F1F' : '#6B7280'}}
             >
               <Image className="w-5 h-5" />
-              案例管理
+              简单案例管理
+            </button>
+
+            <button
+              onClick={() => setActiveTab('detailed-cases')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition ${
+                activeTab === 'detailed-cases' ? 'bg-white shadow-sm' : ''
+              }`}
+              style={{color: activeTab === 'detailed-cases' ? '#1F1F1F' : '#6B7280'}}
+            >
+              <FileImage className="w-5 h-5" />
+              完整案例管理
             </button>
 
             <button
@@ -155,6 +167,7 @@ function AdminDashboard() {
         <main className="flex-1 p-8">
           {activeTab === 'bookings' && <BookingManagement />}
           {activeTab === 'cases' && <CaseStudyManagement />}
+          {activeTab === 'detailed-cases' && <DetailedCaseManagement />}
           {activeTab === 'customers' && (
             <div className="text-center py-12">
               <p className="text-sm" style={{color: '#6B7280'}}>客户管理功能开发中...</p>

@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
+import ServiceCasesSection from './ServiceCasesSection';
 import { useState } from 'react';
 
 function HairTransplantPage() {
@@ -606,6 +607,8 @@ function HairTransplantPage() {
           </div>
         </div>
       </section>
+
+      <ServiceCasesSection serviceType="hair" />
 
       <CTASection />
 

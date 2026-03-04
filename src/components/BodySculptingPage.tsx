@@ -5,6 +5,7 @@ import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import ServiceCasesSection from './ServiceCasesSection';
 
 function BodySculptingPage() {
   const navigate = useNavigate();
@@ -470,6 +471,8 @@ function BodySculptingPage() {
           </div>
         </div>
       </section>
+
+      <ServiceCasesSection serviceType="body" />
 
       <CTASection />
 

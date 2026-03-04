@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
+import ServiceCasesSection from './ServiceCasesSection';
 
 function FacialContourPage() {
   const navigate = useNavigate();
@@ -453,6 +454,8 @@ function FacialContourPage() {
           </div>
         </div>
       </section>
+
+      <ServiceCasesSection serviceType="facial" />
 
       <CTASection />
 

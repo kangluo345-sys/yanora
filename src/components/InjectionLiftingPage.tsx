@@ -5,6 +5,7 @@ import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import ServiceCasesSection from './ServiceCasesSection';
 
 function InjectionLiftingPage() {
   const navigate = useNavigate();
@@ -381,6 +382,8 @@ function InjectionLiftingPage() {
           </div>
         </div>
       </section>
+
+      <ServiceCasesSection serviceType="injection" />
 
       <CTASection />
 
