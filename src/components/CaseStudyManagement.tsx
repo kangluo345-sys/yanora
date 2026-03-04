@@ -61,9 +61,30 @@ function CaseStudyManagement() {
     try {
       setUploading(prev => ({ ...prev, [type]: true }));
 
+      const { data: { user } } = await supabase.auth.getUser();
+      console.log('Current user:', user?.id, user?.email);
+
+      if (!user) {
+        throw new Error('未登录，请先登录管理员账号');
+      }
+
+      const { data: adminData, error: adminError } = await supabase
+        .from('admins')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      console.log('Admin check:', adminData, adminError);
+
+      if (!adminData || !adminData.is_active) {
+        throw new Error('当前用户不是活跃的管理员');
+      }
+
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const filePath = `${fileName}`;
+
+      console.log('Attempting upload:', filePath, 'User ID:', user.id);
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('case-images')
@@ -74,7 +95,7 @@ function CaseStudyManagement() {
 
       if (uploadError) {
         console.error('Upload error details:', uploadError);
-        throw new Error(uploadError.message || '上传失败');
+        throw new Error(`上传失败: ${uploadError.message}`);
       }
 
       if (!uploadData) {
@@ -90,11 +111,12 @@ function CaseStudyManagement() {
       }
 
       console.log('Upload successful:', data.publicUrl);
+      alert('图片上传成功！');
       return data.publicUrl;
     } catch (error: any) {
       console.error('Error uploading image:', error);
       const errorMessage = error?.message || '图片上传失败';
-      alert(`图片上传失败: ${errorMessage}\n请确保您已登录且有管理员权限`);
+      alert(`图片上传失败: ${errorMessage}`);
       return null;
     } finally {
       setUploading(prev => ({ ...prev, [type]: false }));
