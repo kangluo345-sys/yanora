@@ -1,11 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import ImageCompareSlider from './ImageCompareSlider';
 import CTASection from './CTASection';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import ServiceCasesSection from './ServiceCasesSection';
 import { supabase } from '../lib/supabase';
 
 interface DetailedCase {
@@ -499,8 +497,6 @@ function BodySculptingPage() {
           </div>
         </div>
       </section>
-
-      <ServiceCasesSection serviceType="body" />
 
       <CTASection />
 
