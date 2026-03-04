@@ -493,8 +493,8 @@ function App() {
 
       {/* 移动端服务展示 */}
       <section className="md:hidden py-8">
-        <div className="w-full px-6">
-          <div className="p-1 flex flex-col gap-3 rounded-2xl border-4" style={{borderColor: '#B9CBDC'}}>
+        <div className="w-full px-4">
+          <div className="p-1 flex flex-col gap-3 rounded-2xl border-2" style={{borderColor: '#B9CBDC'}}>
             <div className="flex flex-col gap-3">
               <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <ImageCompareSlider
