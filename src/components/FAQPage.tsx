@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -73,6 +74,7 @@ const faqData: FAQItem[] = [
 ];
 
 export default function FAQPage() {
+  const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
@@ -168,28 +170,42 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="px-6 md:px-12 py-12 md:py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
-            还有其他问题？
-          </h2>
-          <p className="text-base md:text-lg mb-8" style={{color: '#6B7280'}}>
-            我们的专家团队随时为您解答
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/booking"
-              className="px-8 py-3 bg-black text-white text-base md:text-lg font-normal hover:bg-gray-800 transition-colors"
-            >
-              预约咨询
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-3 border-2 border-black text-black text-base md:text-lg font-normal hover:bg-black hover:text-white transition-colors"
-            >
-              联系我们
-            </a>
+      {/* Journey CTA */}
+      <section className="py-12 md:py-24 px-4 md:px-12 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="p-8 md:p-16 relative overflow-hidden" style={{backgroundColor: '#1C2B3A'}}>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+
+            <div className="relative">
+              <h2 className="text-2xl md:text-3xl font-light text-white mb-8 md:mb-12 tracking-wide">今天开始你的蜕变之旅</h2>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12">
+                {[
+                  '点击回答问题',
+                  '上传图片',
+                  '为你定制专属方案',
+                  '为你开启旅途'
+                ].map((step, index) => (
+                  <div key={index} className="bg-white bg-opacity-10 backdrop-blur-sm p-6 md:p-8 text-white">
+                    <div className="text-xl md:text-2xl font-light mb-2 md:mb-3">{index + 1}</div>
+                    <div className="text-xs md:text-sm font-light tracking-wide">{step}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/booking')}
+                  className="px-8 md:px-10 py-2.5 md:py-3 bg-white text-xs md:text-sm font-light transition tracking-wider"
+                  style={{color: '#1C2B3A'}}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F3F4F6'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
+                >
+                  开启你的蜕变之旅
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
