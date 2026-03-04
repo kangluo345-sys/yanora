@@ -1,0 +1,320 @@
+      {/* Hero Section - Core Value Statement */}
+      <section className="py-24 md:py-32 px-6 md:px-12" style={{backgroundColor: '#FAFAFA'}}>
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-3xl md:text-5xl font-light mb-8 leading-relaxed tracking-wide" style={{color: '#1F1F1F'}}>
+            面部轮廓重塑
+          </h1>
+          <p className="text-base md:text-lg font-light leading-relaxed" style={{color: '#4B5563'}}>
+            我们根据不同人种的面部结构和骨架特征，结合个人审美偏好，科学地提供个性化整形解决方案。
+          </p>
+        </div>
+      </section>
+
+      {/* Facial Contour Section - Bone & Soft Tissue */}
+      <section className="py-20 md:py-28 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 text-center">
+            <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
+              面部轮廓板块
+            </h2>
+            <p className="text-sm md:text-base font-light mb-12" style={{color: '#6B7280'}}>
+              聚焦于面部大框架的调整，即"骨相"与轮廓线
+            </p>
+            <div className="flex justify-center mb-16">
+              <div className="w-full md:w-2/3 lg:w-1/2 relative">
+                <img
+                  src="/Gemini_Generated_Image_qvpx6jqvpx6jqvpx.png"
+                  alt="面部轮廓示例"
+                  className="w-full h-auto object-contain"
+                />
+
+                {/* 额头标注 - 左侧 */}
+                <div className="absolute" style={{top: '14%', left: '28%'}}>
+                  <div className="relative">
+                    {/* 点 */}
+                    <div className="absolute w-2.5 h-2.5 bg-white border-2 rounded-full" style={{borderColor: '#1C2B3A', left: '-5px', top: '-5px'}}></div>
+                    {/* 线条 */}
+                    <div className="absolute w-20 h-0.5" style={{backgroundColor: '#1C2B3A', top: '-1px', right: '0'}}></div>
+                    {/* 浮动文字框 */}
+                    <div
+                      className="absolute px-4 py-2 bg-white border shadow-lg"
+                      style={{
+                        borderColor: '#1C2B3A',
+                        right: '84px',
+                        top: '-16px',
+                        minWidth: '80px',
+                        animation: 'floatUpDown 3s ease-in-out infinite'
+                      }}
+                    >
+                      <p className="text-sm font-light whitespace-nowrap" style={{color: '#1F1F1F'}}>额头</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 颧骨标注 - 右侧 */}
+                <div className="absolute" style={{top: '48%', right: '20%'}}>
+                  <div className="relative">
+                    {/* 点 */}
+                    <div className="absolute w-2.5 h-2.5 bg-white border-2 rounded-full" style={{borderColor: '#1C2B3A', right: '-5px', top: '-5px'}}></div>
+                    {/* 线条 */}
+                    <div className="absolute w-20 h-0.5" style={{backgroundColor: '#1C2B3A', top: '-1px', left: '0'}}></div>
+                    {/* 浮动文字框 */}
+                    <div
+                      className="absolute px-4 py-2 bg-white border shadow-lg"
+                      style={{
+                        borderColor: '#1C2B3A',
+                        left: '84px',
+                        top: '-16px',
+                        minWidth: '80px',
+                        animation: 'floatUpDown 3s ease-in-out infinite 0.5s'
+                      }}
+                    >
+                      <p className="text-sm font-light whitespace-nowrap" style={{color: '#1F1F1F'}}>颧骨</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 下颌线标注 - 左侧 */}
+                <div className="absolute" style={{top: '72%', left: '25%'}}>
+                  <div className="relative">
+                    {/* 点 */}
+                    <div className="absolute w-2.5 h-2.5 bg-white border-2 rounded-full" style={{borderColor: '#1C2B3A', left: '-5px', top: '-5px'}}></div>
+                    {/* 线条 */}
+                    <div className="absolute w-20 h-0.5" style={{backgroundColor: '#1C2B3A', top: '-1px', right: '0'}}></div>
+                    {/* 浮动文字框 */}
+                    <div
+                      className="absolute px-4 py-2 bg-white border shadow-lg"
+                      style={{
+                        borderColor: '#1C2B3A',
+                        right: '84px',
+                        top: '-16px',
+                        minWidth: '90px',
+                        animation: 'floatUpDown 3s ease-in-out infinite 1s'
+                      }}
+                    >
+                      <p className="text-sm font-light whitespace-nowrap" style={{color: '#1F1F1F'}}>下颌线</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 下巴标注 - 右侧 */}
+                <div className="absolute" style={{top: '90%', right: '35%'}}>
+                  <div className="relative">
+                    {/* 点 */}
+                    <div className="absolute w-2.5 h-2.5 bg-white border-2 rounded-full" style={{borderColor: '#1C2B3A', right: '-5px', top: '-5px'}}></div>
+                    {/* 线条 */}
+                    <div className="absolute w-20 h-0.5" style={{backgroundColor: '#1C2B3A', top: '-1px', left: '0'}}></div>
+                    {/* 浮动文字框 */}
+                    <div
+                      className="absolute px-4 py-2 bg-white border shadow-lg"
+                      style={{
+                        borderColor: '#1C2B3A',
+                        left: '84px',
+                        top: '-16px',
+                        minWidth: '80px',
+                        animation: 'floatUpDown 3s ease-in-out infinite 1.5s'
+                      }}
+                    >
+                      <p className="text-sm font-light whitespace-nowrap" style={{color: '#1F1F1F'}}>下巴</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {[
+              { icon: '□', title: '额头/眉骨', subtitle: '丰额头、眉弓抬高' },
+              { icon: '□', title: '颧骨', subtitle: '颧骨内推/降低' },
+              { icon: '□', title: '下颌线', subtitle: '下颌角截骨、去咬肌' },
+              { icon: '□', title: '下巴', subtitle: '颏成型、假体隆颏' },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="text-center p-8 md:p-10 border transition-all duration-300"
+                style={{borderColor: '#E5E7EB'}}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#1C2B3A';
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E5E7EB';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <div className="text-5xl mb-6" style={{color: '#1C2B3A'}}>{item.icon}</div>
+                <h3 className="text-base md:text-lg font-normal mb-2" style={{color: '#1F1F1F'}}>
+                  {item.title}
+                </h3>
+                <p className="text-xs md:text-sm font-light" style={{color: '#6B7280'}}>
+                  {item.subtitle}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Facial Features Section */}
+      <section className="py-20 md:py-28 px-6 md:px-12" style={{backgroundColor: '#FAFAFA'}}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16">
+            <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
+              五官精雕板块
+            </h2>
+            <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
+              聚焦于五官局部的精细化调整
+            </p>
+          </div>
+
+          {/* Feature Tabs */}
+          <div className="flex flex-wrap gap-3 md:gap-4 mb-12 justify-center">
+            {[
+              { key: 'nose' as const, label: '鼻子' },
+              { key: 'eyes' as const, label: '眼睛' },
+              { key: 'lips' as const, label: '嘴巴' },
+              { key: 'eyebrows' as const, label: '眉毛' },
+              { key: 'ears' as const, label: '耳朵' },
+            ].map((feature) => (
+              <button
+                key={feature.key}
+                onClick={() => setActiveFeature(feature.key)}
+                className="px-8 md:px-10 py-3 md:py-4 text-sm md:text-base transition-all duration-300 border"
+                style={{
+                  backgroundColor: activeFeature === feature.key ? '#1C2B3A' : 'white',
+                  color: activeFeature === feature.key ? 'white' : '#6B7280',
+                  borderColor: activeFeature === feature.key ? '#1C2B3A' : '#D1D5DB',
+                }}
+                onMouseEnter={(e) => {
+                  if (activeFeature !== feature.key) {
+                    e.currentTarget.style.borderColor = '#1C2B3A';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeFeature !== feature.key) {
+                    e.currentTarget.style.borderColor = '#D1D5DB';
+                  }
+                }}
+              >
+                {feature.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Feature Types Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {getCurrentTypes().map((type) => (
+              <div
+                key={type.id}
+                className="bg-white border transition-all duration-300"
+                style={{borderColor: '#E5E7EB'}}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div
+                  className="aspect-square flex items-center justify-center text-6xl"
+                  style={{backgroundColor: '#F9FAFB'}}
+                >
+                  {type.image}
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-base md:text-lg font-normal mb-2" style={{color: '#1F1F1F'}}>
+                    {type.name}
+                  </h3>
+                  <p className="text-xs md:text-sm font-light" style={{color: '#6B7280'}}>
+                    {type.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies Section */}
+      <section className="py-20 md:py-28 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 text-center">
+            <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
+              真实案例
+            </h2>
+            <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
+              见证专业技术带来的美丽蜕变
+            </p>
+          </div>
+
+          <div className="space-y-16">
+            {cases.map((caseItem, index) => (
+              <div
+                key={caseItem.id}
+                className="border-b pb-16"
+                style={{borderColor: index === cases.length - 1 ? 'transparent' : '#E5E7EB'}}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div className={index % 2 === 0 ? 'order-1' : 'order-1 lg:order-2'}>
+                    <div className="inline-block px-4 py-2 mb-6 text-xs tracking-widest border" style={{color: '#1C2B3A', borderColor: '#1C2B3A'}}>
+                      {caseItem.parts}
+                    </div>
+                    <p className="text-base md:text-lg font-light leading-relaxed mb-8" style={{color: '#4B5563'}}>
+                      {caseItem.description}
+                    </p>
+                  </div>
+
+                  <div className={index % 2 === 0 ? 'order-2' : 'order-2 lg:order-1'}>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs mb-3 tracking-wider" style={{color: '#6B7280'}}>术前</p>
+                        <div
+                          className="aspect-[3/4] flex items-center justify-center text-6xl"
+                          style={{backgroundColor: '#F9FAFB'}}
+                        >
+                          {caseItem.before}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs mb-3 tracking-wider" style={{color: '#6B7280'}}>术后</p>
+                        <div
+                          className="aspect-[3/4] flex items-center justify-center text-6xl"
+                          style={{backgroundColor: '#F9FAFB'}}
+                        >
+                          {caseItem.after}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <button
+              onClick={() => navigate('/booking')}
+              className="px-12 md:px-16 py-4 text-white text-sm md:text-base transition tracking-wider"
+              style={{backgroundColor: '#1C2B3A'}}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#101D29';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#1C2B3A';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              预约专属咨询
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default FacialContourPage;

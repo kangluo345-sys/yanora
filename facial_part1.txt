@@ -1,0 +1,78 @@
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import Navbar from './Navbar';
+import Footer from './Footer';
+
+function FacialContourPage() {
+  const navigate = useNavigate();
+  const [activeFeature, setActiveFeature] = useState<'nose' | 'eyes' | 'lips' | 'eyebrows' | 'ears'>('nose');
+
+  const noseTypes = [
+    { id: 1, name: '直鼻', description: '气质干练', image: '🖼️' },
+    { id: 2, name: '微翘鼻', description: '柔和甜美', image: '🖼️' },
+    { id: 3, name: '盒鼻', description: '混血立体', image: '🖼️' },
+    { id: 4, name: '水滴鼻', description: '自然圆润', image: '🖼️' },
+  ];
+
+  const eyeTypes = [
+    { id: 1, name: '开扇双眼皮', description: '妩媚动人', image: '🖼️' },
+    { id: 2, name: '平行双眼皮', description: '清纯自然', image: '🖼️' },
+    { id: 3, name: '新月型', description: '甜美温柔', image: '🖼️' },
+  ];
+
+  const lipTypes = [
+    { id: 1, name: 'M唇', description: '性感迷人', image: '🖼️' },
+    { id: 2, name: '微笑唇', description: '亲和友善', image: '🖼️' },
+    { id: 3, name: '饱满丰唇', description: '丰盈立体', image: '🖼️' },
+  ];
+
+  const eyebrowTypes = [
+    { id: 1, name: '欧式挑眉', description: '高级精致', image: '🖼️' },
+    { id: 2, name: '平直眉', description: '温柔大气', image: '🖼️' },
+    { id: 3, name: '弯月眉', description: '柔和优雅', image: '🖼️' },
+  ];
+
+  const earTypes = [
+    { id: 1, name: '贴发耳', description: '精灵耳矫正', image: '🖼️' },
+    { id: 2, name: '正常耳廓', description: '杯状耳矫正', image: '🖼️' },
+  ];
+
+  const getCurrentTypes = () => {
+    switch (activeFeature) {
+      case 'nose': return noseTypes;
+      case 'eyes': return eyeTypes;
+      case 'lips': return lipTypes;
+      case 'eyebrows': return eyebrowTypes;
+      case 'ears': return earTypes;
+      default: return noseTypes;
+    }
+  };
+
+  const cases = [
+    {
+      id: 1,
+      parts: '颧骨 + 下巴',
+      description: '利用颧骨内推和颏成型术式改善面部轮廓流畅度，打造柔和的面部线条',
+      before: '🖼️',
+      after: '🖼️'
+    },
+    {
+      id: 2,
+      parts: '鼻子 + 眼睛',
+      description: '综合鼻综合和双眼皮手术，提升五官精致度与面部协调性',
+      before: '🖼️',
+      after: '🖼️'
+    },
+    {
+      id: 3,
+      parts: '下颌线',
+      description: '通过下颌角截骨改善方形脸，塑造流畅的下颌线条',
+      before: '🖼️',
+      after: '🖼️'
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
