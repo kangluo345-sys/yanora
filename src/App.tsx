@@ -496,7 +496,7 @@ function App() {
         <div className="w-full px-1">
           <div className="p-1 flex flex-col gap-3 rounded-2xl border-2" style={{borderColor: '#B9CBDC'}}>
             <div className="flex flex-col gap-1">
-              <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <ImageCompareSlider
                   beforeImage="/68744e766a6b63d88f86d714366bcd31.jpg"
                   afterImage="/24a1e5e820d6d721e7aa3970ae648b43.jpg"
@@ -505,7 +505,7 @@ function App() {
                   initialPosition={50}
                 />
               </div>
-              <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <ImageCompareSlider
                   beforeImage="/5ef6dae25777256ca4e3fafedffbbea9.jpg"
                   afterImage="/c324214cb2a62d16d00510d9652c0f60.jpg"
