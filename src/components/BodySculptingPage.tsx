@@ -400,7 +400,7 @@ function BodySculptingPage() {
               <p className="text-base" style={{color: '#6B7280'}}>暂无案例</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-4 md:gap-8">
               {detailedCases.map((caseStudy) => (
                 <div key={caseStudy.id} className="bg-white shadow-lg overflow-hidden">
                   <div className="relative">
@@ -411,19 +411,19 @@ function BodySculptingPage() {
                       altAfter={`${caseStudy.title} - 术后`}
                     />
                   </div>
-                  <div className="p-6 md:p-8">
-                    <div className="mb-3">
+                  <div className="p-3 md:p-6 lg:p-8">
+                    <div className="mb-2 md:mb-3">
                       <span
-                        className="inline-block px-4 py-1 text-xs font-light tracking-wider"
+                        className="inline-block px-2 md:px-4 py-1 text-xs font-light tracking-wider"
                         style={{backgroundColor: '#1C2B3A', color: 'white'}}
                       >
                         {caseStudy.category}
                       </span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-light mb-3" style={{color: '#1F1F1F'}}>
+                    <h3 className="text-sm md:text-lg lg:text-xl font-light mb-2 md:mb-3" style={{color: '#1F1F1F'}}>
                       {caseStudy.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed" style={{color: '#6B7280'}}>
+                    <p className="text-xs md:text-sm lg:text-base leading-relaxed" style={{color: '#6B7280'}}>
                       {caseStudy.description}
                     </p>
                   </div>
