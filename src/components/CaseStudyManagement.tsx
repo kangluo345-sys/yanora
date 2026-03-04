@@ -15,10 +15,9 @@ interface CaseStudy {
 }
 
 interface FormData {
-  title: string;
-  description: string;
   before_image_url: string;
   after_image_url: string;
+  title: string;
   category: string;
   display_order: number;
   is_active: boolean;
@@ -30,10 +29,9 @@ function CaseStudyManagement() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
-    title: '',
-    description: '',
     before_image_url: '',
     after_image_url: '',
+    title: '',
     category: '面部轮廓',
     display_order: 0,
     is_active: true
@@ -89,10 +87,9 @@ function CaseStudyManagement() {
 
   const handleEdit = (caseStudy: CaseStudy) => {
     setFormData({
-      title: caseStudy.title,
-      description: caseStudy.description,
       before_image_url: caseStudy.before_image_url,
       after_image_url: caseStudy.after_image_url,
+      title: caseStudy.title,
       category: caseStudy.category,
       display_order: caseStudy.display_order,
       is_active: caseStudy.is_active
@@ -134,10 +131,9 @@ function CaseStudyManagement() {
 
   const resetForm = () => {
     setFormData({
-      title: '',
-      description: '',
       before_image_url: '',
       after_image_url: '',
+      title: '',
       category: '面部轮廓',
       display_order: 0,
       is_active: true
@@ -153,10 +149,13 @@ function CaseStudyManagement() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-light" style={{color: '#1F1F1F'}}>案例管理</h2>
+        <h2 className="text-2xl font-light" style={{color: '#1F1F1F'}}>简单案例管理</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm transition hover:bg-gray-800"
+          className="flex items-center gap-2 px-6 py-2.5 text-white text-sm transition"
+          style={{backgroundColor: '#1C2B3A'}}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#101D29'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2B3A'}
         >
           <Upload className="w-4 h-4" />
           {showForm ? '取消' : '添加新案例'}
@@ -164,132 +163,141 @@ function CaseStudyManagement() {
       </div>
 
       {showForm && (
-        <div className="mb-8 bg-white border p-6" style={{borderColor: '#E5E7EB'}}>
-          <h3 className="text-lg font-light mb-4" style={{color: '#1F1F1F'}}>
+        <div className="mb-8 bg-white border-2 p-8" style={{borderColor: '#B9CBDC'}}>
+          <h3 className="text-xl font-light mb-6 tracking-wide" style={{color: '#1F1F1F'}}>
             {editingId ? '编辑案例' : '添加新案例'}
           </h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-gray-50 p-6 border" style={{borderColor: '#E5E7EB'}}>
+              <h4 className="text-sm font-normal mb-4" style={{color: '#1F1F1F'}}>上传对比照片</h4>
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                    术前照片 URL <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.before_image_url}
+                    onChange={(e) => setFormData({ ...formData, before_image_url: e.target.value })}
+                    className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
+                    style={{borderColor: '#D1D5DB'}}
+                    placeholder="https://example.com/before.jpg"
+                    required
+                  />
+                  {formData.before_image_url && (
+                    <div className="mt-3">
+                      <img
+                        src={formData.before_image_url}
+                        alt="术前预览"
+                        className="w-full h-48 object-cover border"
+                        style={{borderColor: '#D1D5DB'}}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                    术后照片 URL <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.after_image_url}
+                    onChange={(e) => setFormData({ ...formData, after_image_url: e.target.value })}
+                    className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
+                    style={{borderColor: '#D1D5DB'}}
+                    placeholder="https://example.com/after.jpg"
+                    required
+                  />
+                  {formData.after_image_url && (
+                    <div className="mt-3">
+                      <img
+                        src={formData.after_image_url}
+                        alt="术后预览"
+                        className="w-full h-48 object-cover border"
+                        style={{borderColor: '#D1D5DB'}}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm mb-2" style={{color: '#4B5563'}}>标题</label>
+                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>
+                  案例标题（选填）
+                </label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 border focus:outline-none"
+                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
                   style={{borderColor: '#D1D5DB'}}
-                  required
+                  placeholder="例如：面部轮廓提升案例"
                 />
               </div>
 
               <div>
-                <label className="block text-sm mb-2" style={{color: '#4B5563'}}>类别</label>
+                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>类别</label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3 py-2 border focus:outline-none"
+                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
                   style={{borderColor: '#D1D5DB'}}
                 >
                   <option value="面部轮廓">面部轮廓</option>
                   <option value="身体塑形">身体塑形</option>
                   <option value="注射提升">注射提升</option>
+                  <option value="植发">植发</option>
+                  <option value="牙齿美容">牙齿美容</option>
                 </select>
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm mb-2" style={{color: '#4B5563'}}>描述</label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full px-3 py-2 border focus:outline-none"
-                style={{borderColor: '#D1D5DB'}}
-                rows={3}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm mb-2" style={{color: '#4B5563'}}>术前照片URL</label>
-                <input
-                  type="url"
-                  value={formData.before_image_url}
-                  onChange={(e) => setFormData({ ...formData, before_image_url: e.target.value })}
-                  className="w-full px-3 py-2 border focus:outline-none"
-                  style={{borderColor: '#D1D5DB'}}
-                  placeholder="https://..."
-                  required
-                />
-                {formData.before_image_url && (
-                  <img
-                    src={formData.before_image_url}
-                    alt="术前预览"
-                    className="mt-2 w-32 h-32 object-cover border"
-                    style={{borderColor: '#D1D5DB'}}
-                  />
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2" style={{color: '#4B5563'}}>术后照片URL</label>
-                <input
-                  type="url"
-                  value={formData.after_image_url}
-                  onChange={(e) => setFormData({ ...formData, after_image_url: e.target.value })}
-                  className="w-full px-3 py-2 border focus:outline-none"
-                  style={{borderColor: '#D1D5DB'}}
-                  placeholder="https://..."
-                  required
-                />
-                {formData.after_image_url && (
-                  <img
-                    src={formData.after_image_url}
-                    alt="术后预览"
-                    className="mt-2 w-32 h-32 object-cover border"
-                    style={{borderColor: '#D1D5DB'}}
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm mb-2" style={{color: '#4B5563'}}>显示顺序</label>
+                <label className="block text-sm mb-2 font-normal" style={{color: '#4B5563'}}>显示顺序</label>
                 <input
                   type="number"
                   value={formData.display_order}
-                  onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border focus:outline-none"
+                  onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
+                  className="w-full px-4 py-2.5 border focus:outline-none focus:border-gray-400 transition"
                   style={{borderColor: '#D1D5DB'}}
                   min="0"
+                  placeholder="0"
                 />
+                <p className="text-xs mt-1" style={{color: '#9CA3AF'}}>数字越小越靠前显示</p>
               </div>
 
-              <div className="flex items-end">
-                <label className="flex items-center gap-2">
+              <div className="flex items-center pt-7">
+                <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={formData.is_active}
                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                   />
-                  <span className="text-sm" style={{color: '#4B5563'}}>显示在前台</span>
+                  <span className="text-sm font-normal" style={{color: '#4B5563'}}>在前台展示此案例</span>
                 </label>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3 pt-4">
               <button
                 type="submit"
-                className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm transition hover:bg-gray-800"
+                className="flex items-center gap-2 px-6 py-2.5 text-white text-sm transition"
+                style={{backgroundColor: '#1C2B3A'}}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#101D29'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2B3A'}
               >
                 <Save className="w-4 h-4" />
-                {editingId ? '更新' : '保存'}
+                {editingId ? '更新案例' : '保存案例'}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="flex items-center gap-2 px-4 py-2 border text-sm transition"
+                className="flex items-center gap-2 px-6 py-2.5 border text-sm transition hover:bg-gray-50"
                 style={{borderColor: '#D1D5DB', color: '#6B7280'}}
               >
                 <X className="w-4 h-4" />
@@ -337,11 +345,6 @@ function CaseStudyManagement() {
                 </span>
               </div>
 
-              {caseStudy.description && (
-                <p className="text-xs mb-3 line-clamp-2" style={{color: '#6B7280'}}>
-                  {caseStudy.description}
-                </p>
-              )}
 
               <div className="flex gap-2">
                 <button
