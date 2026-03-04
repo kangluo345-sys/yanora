@@ -498,8 +498,8 @@ function App() {
             <div className="flex flex-col gap-3">
               <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <ImageCompareSlider
-                  beforeImage="/68744e766a6b63d88f86d714366bcd31.jpg"
-                  afterImage="/24a1e5e820d6d721e7aa3970ae648b43.jpg"
+                  beforeImage="/24a1e5e820d6d721e7aa3970ae648b43.jpg"
+                  afterImage="/68744e766a6b63d88f86d714366bcd31.jpg"
                   beforeLabel="术前"
                   afterLabel="术后"
                   initialPosition={50}
