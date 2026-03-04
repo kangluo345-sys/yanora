@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { LogOut, Calendar, Image, Users, HelpCircle } from 'lucide-react';
+import { LogOut, Calendar, Image, Users, HelpCircle, MessageSquare } from 'lucide-react';
 import BookingManagement from './BookingManagement';
 import CaseStudyManagement from './CaseStudyManagement';
 import FAQManagement from './FAQManagement';
+import TestimonialManagement from './TestimonialManagement';
 
 interface Admin {
   id: string;
@@ -12,7 +13,7 @@ interface Admin {
   role: string;
 }
 
-type TabType = 'bookings' | 'cases' | 'customers' | 'faqs';
+type TabType = 'bookings' | 'cases' | 'customers' | 'faqs' | 'testimonials';
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -137,6 +138,17 @@ function AdminDashboard() {
               <HelpCircle className="w-5 h-5" />
               FAQ 管理
             </button>
+
+            <button
+              onClick={() => setActiveTab('testimonials')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition ${
+                activeTab === 'testimonials' ? 'bg-white shadow-sm' : ''
+              }`}
+              style={{color: activeTab === 'testimonials' ? '#1F1F1F' : '#6B7280'}}
+            >
+              <MessageSquare className="w-5 h-5" />
+              客户评价管理
+            </button>
           </nav>
         </aside>
 
@@ -149,6 +161,7 @@ function AdminDashboard() {
             </div>
           )}
           {activeTab === 'faqs' && <FAQManagement />}
+          {activeTab === 'testimonials' && <TestimonialManagement />}
         </main>
       </div>
     </div>
