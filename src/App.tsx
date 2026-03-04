@@ -1279,7 +1279,13 @@ function App() {
               </div>
 
               <div className="flex justify-center">
-                <button className="px-8 md:px-10 py-2.5 md:py-3 bg-white text-xs md:text-sm font-light transition tracking-wider" style={{color: '#1C2B3A'}} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F3F4F6'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}>
+                <button
+                  onClick={() => navigate('/booking')}
+                  className="px-8 md:px-10 py-2.5 md:py-3 bg-white text-xs md:text-sm font-light transition tracking-wider"
+                  style={{color: '#1C2B3A'}}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F3F4F6'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
+                >
                   {t('journey.cta')}
                 </button>
               </div>
