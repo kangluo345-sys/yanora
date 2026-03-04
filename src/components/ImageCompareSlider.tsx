@@ -77,7 +77,7 @@ export default function ImageCompareSlider({
           <img
             src={afterImage}
             alt={afterLabel}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         ) : (
           <div
@@ -100,7 +100,7 @@ export default function ImageCompareSlider({
             <img
               src={beforeImage}
               alt={beforeLabel}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-top"
             />
           ) : (
             <div
