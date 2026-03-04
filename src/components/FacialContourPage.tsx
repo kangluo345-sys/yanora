@@ -388,69 +388,52 @@ function FacialContourPage() {
       {/* Case Studies Section */}
       <section className="py-20 md:py-28 px-6 md:px-12 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-
-          {/* Desktop layout */}
-          <div className="hidden md:block">
-            <div className="relative flex items-center justify-center gap-32 mb-16">
-              <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
-                <path
-                  d="M 20,20 L 420,20 L 420,524 L 20,524 L 20,20 M 548,20 L 948,20 L 948,524 L 548,524 L 548,20"
-                  fill="none"
-                  stroke="#D1D5DB"
-                  strokeWidth="2"
-                />
-              </svg>
-              <div className="overflow-hidden relative" style={{width: '400px', backgroundColor: '#F3F4F6'}}>
-                <img
-                  src="/540f310b1f9b5244da98c950465274f4.png"
-                  alt="手术前"
-                  className="w-full object-cover"
-                  style={{height: '500px'}}
-                />
-                <div className="absolute bottom-4 left-4 bg-white px-3 py-1.5 shadow">
-                  <span className="text-xs font-medium text-gray-700">手术前</span>
-                </div>
-              </div>
-              <div className="overflow-hidden relative" style={{width: '400px', backgroundColor: '#F3F4F6'}}>
-                <img
-                  src="/7f2a85b5a678c2f472ee7c56c64a6039.png"
-                  alt="手术后"
-                  className="w-full object-cover"
-                  style={{height: '500px'}}
-                />
-                <div className="absolute bottom-4 left-4 bg-white px-3 py-1.5 shadow">
-                  <span className="text-xs font-medium text-gray-700">手术后</span>
-                </div>
-              </div>
-            </div>
+          <div className="mb-16 text-center">
+            <h2 className="text-2xl md:text-3xl font-light mb-4 tracking-wide" style={{color: '#1F1F1F'}}>
+              真实案例
+            </h2>
+            <p className="text-sm md:text-base font-light" style={{color: '#6B7280'}}>
+              见证专业技术带来的美丽蜕变
+            </p>
           </div>
 
-          {/* Mobile layout */}
-          <div className="md:hidden">
-            <div className="flex flex-col gap-6 mb-8">
-              <div className="flex justify-center gap-6">
-                <div className="overflow-hidden relative w-40" style={{backgroundColor: '#F3F4F6'}}>
-                  <img
-                    src="/540f310b1f9b5244da98c950465274f4.png"
-                    alt="手术前"
-                    className="h-56 w-full object-cover"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-white px-2 py-0.5">
-                    <span className="text-xs text-gray-600">手术前</span>
+          <div className="space-y-16">
+            {cases.map((caseStudy, index) => (
+              <div key={caseStudy.id} className="bg-white border" style={{borderColor: '#E5E7EB'}}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                  {/* Image Compare Slider */}
+                  <div className="p-6 md:p-8 min-h-[500px] md:min-h-[600px] flex items-center">
+                    <ImageCompareSlider
+                      beforeImage="/540f310b1f9b5244da98c950465274f4.png"
+                      afterImage="/7f2a85b5a678c2f472ee7c56c64a6039.png"
+                      altBefore={`${caseStudy.parts} - 术前`}
+                      altAfter={`${caseStudy.parts} - 术后`}
+                    />
                   </div>
-                </div>
-                <div className="overflow-hidden relative w-40" style={{backgroundColor: '#F3F4F6'}}>
-                  <img
-                    src="/7f2a85b5a678c2f472ee7c56c64a6039.png"
-                    alt="手术后"
-                    className="h-56 w-full object-cover"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-white px-2 py-0.5">
-                    <span className="text-xs text-gray-600">手术后</span>
+
+                  {/* Case Details */}
+                  <div className="p-6 md:p-8 flex flex-col justify-center">
+                    <div className="mb-4">
+                      <span
+                        className="inline-block px-4 py-1 text-xs font-light tracking-wider"
+                        style={{backgroundColor: '#1C2B3A', color: 'white'}}
+                      >
+                        {caseStudy.parts}
+                      </span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-light mb-4" style={{color: '#1F1F1F'}}>
+                      案例 {String(index + 1).padStart(2, '0')}
+                    </h3>
+                    <h4 className="text-lg md:text-xl font-normal mb-4" style={{color: '#1F1F1F'}}>
+                      面部轮廓改造
+                    </h4>
+                    <p className="text-sm md:text-base leading-relaxed" style={{color: '#6B7280'}}>
+                      {caseStudy.description}
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
