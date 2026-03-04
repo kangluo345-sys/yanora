@@ -56,15 +56,15 @@ function CaseStudiesSection() {
             {[1, 2, 3, 4].map((row) => (
               <div key={row} className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3">
                 {[1, 2].map((col) => (
-                  <div key={col} className="md:col-span-2 bg-white overflow-hidden border-4 border-blue-500">
+                  <div key={col} className="md:col-span-2 bg-white overflow-hidden">
                     <div className="grid grid-cols-2 gap-0">
-                      <div className="aspect-[4/5] flex items-center justify-center relative border-2 border-red-500" style={{backgroundColor: '#B9CBDC'}}>
+                      <div className="aspect-[4/5] flex items-center justify-center relative" style={{backgroundColor: '#B9CBDC'}}>
                         <span className="text-gray-400 text-xs">对比 A-{row * 2 - 2 + col}</span>
                         <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 text-xs text-gray-500">
                           对比 A-{row}-{col}
                         </div>
                       </div>
-                      <div className="aspect-[4/5] flex items-center justify-center relative border-2 border-red-500" style={{backgroundColor: '#B9CBDC'}}>
+                      <div className="aspect-[4/5] flex items-center justify-center relative" style={{backgroundColor: '#B9CBDC'}}>
                         <span className="text-gray-400 text-xs">对比 B-{row * 2 - 2 + col}</span>
                         <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 text-xs text-gray-500">
                           对比 B-{row}-{col}
@@ -98,9 +98,9 @@ function CaseStudiesSection() {
           {rows.map((row, rowIndex) => (
             <div key={rowIndex} className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3">
               {row.map((caseStudy) => (
-                <div key={caseStudy.id} className="md:col-span-2 border-4 border-blue-500">
+                <div key={caseStudy.id} className="md:col-span-2">
                   <div className="grid grid-cols-2 gap-0">
-                    <div className="aspect-[4/5] overflow-hidden relative group border-2 border-red-500">
+                    <div className="aspect-[4/5] overflow-hidden relative group">
                       <img
                         src={caseStudy.before_image_url}
                         alt={`${caseStudy.title} - 术前`}
@@ -110,7 +110,7 @@ function CaseStudiesSection() {
                         <span className="text-xs text-white">术前</span>
                       </div>
                     </div>
-                    <div className="aspect-[4/5] overflow-hidden relative group border-2 border-red-500">
+                    <div className="aspect-[4/5] overflow-hidden relative group">
                       <img
                         src={caseStudy.after_image_url}
                         alt={`${caseStudy.title} - 术后`}
