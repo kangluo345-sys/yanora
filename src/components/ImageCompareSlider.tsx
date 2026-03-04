@@ -87,6 +87,9 @@ export default function ImageCompareSlider({
             <span className="text-gray-500 text-sm">{afterLabel}</span>
           </div>
         )}
+        <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded text-xs font-medium pointer-events-none">
+          AFTER
+        </div>
       </div>
 
       <div
@@ -113,6 +116,9 @@ export default function ImageCompareSlider({
               <span className="text-gray-500 text-sm">{beforeLabel}</span>
             </div>
           )}
+          <div className="absolute top-2 left-2 bg-black/60 text-white px-2 py-1 rounded text-xs font-medium pointer-events-none">
+            BEFORE
+          </div>
         </div>
       </div>
 
