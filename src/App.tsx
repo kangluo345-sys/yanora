@@ -8,6 +8,7 @@ import CaseStudiesSection from './components/CaseStudiesSection';
 import ServicesSection from './components/ServicesSection';
 import MobileTestimonialCarousel from './components/MobileTestimonialCarousel';
 import LanguageSelector from './components/LanguageSelector';
+import Footer from './components/Footer';
 import { useLanguage } from './contexts/LanguageContext';
 
 interface Profile {
@@ -1294,20 +1295,7 @@ function App() {
         </div>
       </section>
 
-      <footer className="text-white py-16 px-12" style={{backgroundColor: '#1C2B3A'}}>
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <span className="text-xl font-light tracking-widest">YANORA</span>
-          </div>
-          <p className="text-sm mb-10 font-light tracking-wide" style={{color: '#A0A7B5'}}>{t('footer.tagline')}</p>
-          <div className="flex justify-center gap-12 text-xs font-light" style={{color: '#A0A7B5'}}>
-            <a href="#" className="hover:text-white transition">{t('footer.about')}</a>
-            <a href="#" className="hover:text-white transition">{t('footer.contact')}</a>
-            <a href="#" className="hover:text-white transition">{t('footer.privacy')}</a>
-            <a href="#" className="hover:text-white transition">{t('footer.terms')}</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
