@@ -87,37 +87,34 @@ function RegisterPage() {
 
         if (avatarFile) {
           const fileExt = avatarFile.name.split('.').pop();
-          const fileName = `${authData.user.id}-${Date.now()}.${fileExt}`;
-          const filePath = `avatars/${fileName}`;
+          const fileName = `${authData.user.id}/${Date.now()}.${fileExt}`;
 
           const { error: uploadError } = await supabase.storage
             .from('avatars')
-            .upload(filePath, avatarFile);
+            .upload(fileName, avatarFile);
 
           if (uploadError) {
             console.error('头像上传失败:', uploadError);
           } else {
             const { data: urlData } = supabase.storage
               .from('avatars')
-              .getPublicUrl(filePath);
+              .getPublicUrl(fileName);
             avatarUrl = urlData.publicUrl;
           }
         }
 
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              email: email,
-              avatar_url: avatarUrl,
-            },
-          ]);
+        if (avatarUrl) {
+          const { error: updateError } = await supabase
+            .from('profiles')
+            .update({ avatar_url: avatarUrl })
+            .eq('id', authData.user.id);
 
-        if (profileError) {
-          console.error('创建用户资料失败:', profileError);
+          if (updateError) {
+            console.error('更新头像失败:', updateError);
+          }
         }
 
+        alert('注册成功！请登录您的账户。');
         navigate('/login');
       }
     } catch (err: any) {

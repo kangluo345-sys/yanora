@@ -7,6 +7,7 @@ import CaseStudyManagement from './CaseStudyManagement';
 import DetailedCaseManagement from './DetailedCaseManagement';
 import FAQManagement from './FAQManagement';
 import TestimonialManagement from './TestimonialManagement';
+import CustomerManagement from './CustomerManagement';
 
 interface Admin {
   id: string;
@@ -168,11 +169,7 @@ function AdminDashboard() {
           {activeTab === 'bookings' && <BookingManagement />}
           {activeTab === 'cases' && <CaseStudyManagement />}
           {activeTab === 'detailed-cases' && <DetailedCaseManagement />}
-          {activeTab === 'customers' && (
-            <div className="text-center py-12">
-              <p className="text-sm" style={{color: '#6B7280'}}>客户管理功能开发中...</p>
-            </div>
-          )}
+          {activeTab === 'customers' && <CustomerManagement />}
           {activeTab === 'faqs' && <FAQManagement />}
           {activeTab === 'testimonials' && <TestimonialManagement />}
         </main>
