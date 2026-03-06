@@ -9,6 +9,7 @@ import ServicesSection from './components/ServicesSection';
 import MobileTestimonialCarousel from './components/MobileTestimonialCarousel';
 import LanguageSelector from './components/LanguageSelector';
 import Footer from './components/Footer';
+import SplashScreen from './components/SplashScreen';
 import { useLanguage } from './contexts/LanguageContext';
 
 interface Profile {
@@ -26,6 +27,16 @@ function App() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileProjects, setShowMobileProjects] = useState(false);
   const [expandedEthnicity, setExpandedEthnicity] = useState<string | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
+  const [hasShownSplash, setHasShownSplash] = useState(false);
+
+  useEffect(() => {
+    const splashShown = sessionStorage.getItem('splashShown');
+    if (splashShown === 'true') {
+      setShowSplash(false);
+      setHasShownSplash(true);
+    }
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -66,6 +77,16 @@ function App() {
     setShowUserMenu(false);
     navigate('/');
   };
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+    setHasShownSplash(true);
+    sessionStorage.setItem('splashShown', 'true');
+  };
+
+  if (showSplash && !hasShownSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-white">

@@ -56,6 +56,9 @@ const getTranslations = (lang: Language) => {
 };
 
 const zhTranslations = {
+  splash: {
+    tagline: '遇见最美的自己',
+  },
   nav: {
     home: '首页',
     projects: '项目',
@@ -207,6 +210,9 @@ const zhTranslations = {
 };
 
 const enTranslations = {
+  splash: {
+    tagline: 'Meet the Most Beautiful You',
+  },
   nav: {
     home: 'Home',
     projects: 'Projects',
@@ -358,6 +364,9 @@ const enTranslations = {
 };
 
 const frTranslations = {
+  splash: {
+    tagline: 'Rencontrez la Plus Belle Version de Vous',
+  },
   nav: {
     home: 'Accueil',
     projects: 'Projets',
@@ -509,6 +518,9 @@ const frTranslations = {
 };
 
 const arTranslations = {
+  splash: {
+    tagline: 'اكتشف أجمل نسخة منك',
+  },
   nav: {
     home: 'الرئيسية',
     projects: 'المشاريع',
@@ -660,6 +672,9 @@ const arTranslations = {
 };
 
 const esTranslations = {
+  splash: {
+    tagline: 'Conoce la Versión Más Bella de Ti',
+  },
   nav: {
     home: 'Inicio',
     projects: 'Proyectos',
